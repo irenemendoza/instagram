@@ -2,3 +2,5 @@ django==6.0.1
 django-debug-toolbar==6.1.0
 django-extensions==4.1
 pre-commit==4.5.1
+django-crispy-forms==2.5
+crispy-bootstrap5==2025.6
