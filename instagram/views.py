@@ -3,14 +3,42 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    FormView,
+    TemplateView,
+    UpdateView,
+)
 
 from instagram.forms import LoginForm, RegisterForm
+from profiles.models import UserProfile
 
 
 class HomeView(TemplateView):
     template_name = "general/home.html"
+
+
+class ProfileDetailView(DetailView):
+    model = UserProfile
+    template_name = "general/profile_detail.html"
+    context_object_name = "profile"
+
+
+class ProfileUpdateView(UpdateView):
+    model = UserProfile
+    template_name = "general/profile_update.html"
+    context_object_name = "profile"
+    fields = ["profile_picture", "bio", "birth_date"]
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, "Se ha actualizado tu perfil"
+        )
+        return super(ProfileUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse("profile_detail", args=[self.object.pk])
 
 
 class LegalView(TemplateView):

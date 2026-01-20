@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class RegisterForm(forms.ModelForm):
 
+    password = forms.CharField(label="password", widget=forms.PasswordInput())
+
     class Meta:
         model = User
         fields = ["first_name", "username", "password", "email"]
@@ -12,6 +14,11 @@ class RegisterForm(forms.ModelForm):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
         user.save()
+
+        from profiles.models import UserProfile
+
+        UserProfile.objects.create(user=user)
+
         return user
 
 

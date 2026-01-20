@@ -1,0 +1,21 @@
+{% extends 'general/layout.html' %}
+
+{% block page_title %}Mi Perfil{% endblock %}
+
+{% block page_content %}
+
+    <div class="container">
+        <h1>Mi perfil</h1>
+        <p>Biografía: {{ profile.bio|default_if_none:'Sin rellenar' }}</p>
+        <p>Fecha de nacimiento: {{ profile.birth_date|default_if_none:'Sin rellenar' }}</p>
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="" width="300">
+        {% else %}
+            <p>No dispone de foto de perfil</p>
+        {% endif %}
+        <p>Followers: {{ profile.followers.count }}</p>
+        <p><a href="{% url 'profile_update' profile.pk %}">Editar</a></p>
+
+    </div>
+
+{% endblock %}
