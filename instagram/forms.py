@@ -13,3 +13,8 @@ class RegisterForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password"])
         user.save()
         return user
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="username")
+    password = forms.CharField(label="password", widget=forms.PasswordInput())

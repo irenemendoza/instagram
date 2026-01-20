@@ -1,26 +1,19 @@
 {% extends 'general/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_title %}Log in{% endblock %}
 
 {% block page_content %}
     <div class="container">
-        <div class="row mt-2 mb-2">
-            <div class="col-sm">
-                {% for message in messages %}
-                    <div class="alert
-                        {% if message.tags %}
-                            {% if message.tags == 'error' %}
-                                alert-danger
-                            {% else %}
-                                alert-{{ message.tags }}
-                            {% endif %}
-                        {% else %}
-                            alert-info
-                        {% endif %}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        <form method="post" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ form.username|as_crispy_field }}
+                    {{ form.password|as_crispy_field }}
+                </div>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
     </div>
 {% endblock %}
