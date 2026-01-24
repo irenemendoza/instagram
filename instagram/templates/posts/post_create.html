@@ -1,0 +1,25 @@
+{% extends 'general/layout.html' %}
+
+{% block page_title %}Publicación{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block page_content %}
+
+    <div class="container">
+        <h1>Crear publicación</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ form.image|as_crispy_field }}
+                    {{ form.caption|as_crispy_field }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Publicar</button>
+        </form>
+
+
+    </div>
+
+{% endblock %}

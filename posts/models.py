@@ -3,12 +3,15 @@ from django.db import models
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    image = models.ImageField(upload_to="posts/")
+    user = models.ForeignKey(
+        User, verbose_name="Usuario", on_delete=models.CASCADE, related_name="posts"
+    )
+    image = models.ImageField("Publlicación", upload_to="posts_images/")
     caption = models.TextField("Texto", max_length=500, blank=True)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField("Publicada en", auto_now_add=True)
     likes = models.ManyToManyField(
         User,
+        verbose_name="Me gusta",
         related_name="liked_posts",
     )
 

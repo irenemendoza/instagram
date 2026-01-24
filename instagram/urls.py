@@ -10,10 +10,12 @@ from instagram.views import (
     LegalView,
     LoginView,
     ProfileDetailView,
+    ProfileListView,
     ProfileUpdateView,
     RegisterView,
     logout_view,
 )
+from posts.views import PostCreateView, PostDetailView
 
 urlpatterns = (
     [
@@ -24,10 +26,13 @@ urlpatterns = (
         path("logout/", logout_view, name="logout"),
         path("register/", RegisterView.as_view(), name="register"),
         path("contact/", ContactView.as_view(), name="contact"),
+        path("profiles/", ProfileListView.as_view(), name="profiles_list"),
         path("profile/<pk>/", ProfileDetailView.as_view(), name="profile_detail"),
         path(
             "profile/update/<pk>/", ProfileUpdateView.as_view(), name="profile_update"
         ),
+        path("post/create/", PostCreateView.as_view(), name="post_create"),
+        path("post/<pk>/", PostDetailView.as_view(), name="post_detail"),
     ]
     + debug_toolbar_urls()
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

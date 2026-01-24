@@ -1,0 +1,15 @@
+{% extends 'general/layout.html' %}
+
+{% block page_title %}Mi Publicación{% endblock %}
+
+{% block page_content %}
+
+    <div class="container">
+        <h1>Mi publicación</h1>
+        <p>{{ post.image }}</p>
+        <p>{{ post.caption }}</p>
+        <p><a href="#">Editar</a></p>
+
+    </div>
+
+{% endblock %}

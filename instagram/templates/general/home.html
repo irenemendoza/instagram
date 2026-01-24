@@ -1,3 +1,20 @@
 {% extends 'general/layout.html' %}
 
 {% block page_title %}Home{% endblock %}
+
+{% block page_content %}
+    <div class="container">
+        <h1>¡Bienvenido a Insta!</h1>
+
+        <section>
+            <h2>Últimas publicaciones</h2>
+            <div class="row">
+                {% for post in last_posts %}
+                    <div class="col-12 col-sm-6 col-md-4">
+                        {% include '_includes/posts/_posts.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}
