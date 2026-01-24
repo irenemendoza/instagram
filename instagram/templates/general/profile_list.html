@@ -18,7 +18,7 @@
                         {% else %}
                             <p>No dispone de foto de perfil</p>
                         {% endif %}
-                        <p>Followers: {{ profile.followers.count }}</p>
+                        <p>Followers: {{ profile.following.count }}</p>
                         <p><a href="{% url 'profile_detail' profile.pk %}">Ver perfil</a></p>
                     </article>
                 </div>

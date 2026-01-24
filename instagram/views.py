@@ -25,15 +25,11 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.request.user is authenticate:
+        if self.request.user.is_authenticated:
             following = Follow.objects.filter(
                 follower=self.request.user.profile
-            ).values_list
-            last_posts = (
-                Post.objects.all()
-                .filter(user_profile_user_in=following)
-                .order_by("created_at")[:5]
-            )
+            ).values_list("following__user", flat=True)
+            last_posts = Post.objects.filter(user__profile__user__in=following)
         else:
             last_posts = Post.objects.all().order_by("created_at")[:5]
         context["last_posts"] = last_posts
