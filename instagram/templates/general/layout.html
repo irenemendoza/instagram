@@ -6,6 +6,15 @@
     <title>{% block head_title %}Layout{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .like-button{
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+
     {% csrf_token %}
 </head>
 <body>
@@ -24,6 +33,28 @@
     {% include "_includes/_footer.html" %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        const likeButtons = document.querySelectorAll(".like-button");
+        likeButtons.forEach(likeButton => {
+            let nLikesSpan = likeButton.querySelector('span');
+            let nLikes = parseInt(nLikesSpan.innerHTML);
+            likeButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                fetch(likeButton.href)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.liked) {
+                        nLikes += 1;
+                        likeButton.innerHTML = `<span>${nLikes}</span><i class="bi bi-suit-heart-fill"></i>`;
+                    } else {
+                        nLikes -= 1;
+                        likeButton.innerHTML = `<span>${nLikes}</span><i class="bi bi-suit-heart"></i>`;
+                    }
+                })
+            })
+        })
+
+    </script>
 </body>
 
 

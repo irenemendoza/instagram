@@ -15,7 +15,7 @@ from instagram.views import (
     RegisterView,
     logout_view,
 )
-from posts.views import PostCreateView, PostDetailView
+from posts.views import PostCreateView, PostDetailView, post_like, post_like_ajax
 
 urlpatterns = (
     [
@@ -32,6 +32,8 @@ urlpatterns = (
             "profile/update/<pk>/", ProfileUpdateView.as_view(), name="profile_update"
         ),
         path("post/create/", PostCreateView.as_view(), name="post_create"),
+        path("post/like/<pk>/", post_like, name="post_like"),
+        path("post/like-ajax/<pk>/", post_like_ajax, name="post_like_ajax"),
         path("post/<pk>/", PostDetailView.as_view(), name="post_detail"),
     ]
     + debug_toolbar_urls()
