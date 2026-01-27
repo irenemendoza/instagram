@@ -36,14 +36,15 @@ class HomeView(TemplateView):
         return context
 
 
-@method_decorator(login_required, name="dispatch")
 class ProfileListView(ListView):
     model = UserProfile
     template_name = "general/profile_list.html"
     context_object_name = "profiles"
 
     def get_queryset(self):
-        return UserProfile.objects.all().exclude(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return UserProfile.objects.all().exclude(user=self.request.user)
+        return UserProfile.objects.all()
 
 
 @method_decorator(login_required, name="dispatch")

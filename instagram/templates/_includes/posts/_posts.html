@@ -22,14 +22,29 @@
             <img class="img-fluid img-responsive" src="{{ post.image.url }}" width="300">
         </a>
     </div>
-    <div class="text-center">
-        <p><a class="like-button" href="{% url 'post_like_ajax' post.pk %}">
-            <span id="nLikes">{{ post.likes.all.count }}</span>
-            {% if request.user in post.likes.all %}
-                <i class="bi bi-suit-heart-fill"></i>
-            {% else %}
-                <i class="bi bi-suit-heart"></i>
-            {% endif %}
-        </a></p>
-    </div>
+    <footer>
+        <div class="row">
+            <div class="col col-12">
+                <div class="text-center">
+                    {% if request.user.is_authenticated %}
+                        <p>
+                            <a class="like-button" href="{% url 'post_like_ajax' post.pk %}">
+                                <span id="nLikes">{{ post.likes.all.count }}</span>
+                                {% if request.user in post.likes.all %}
+                                    <i class="bi bi-suit-heart-fill"></i>
+                                {% else %}
+                                    <i class="bi bi-suit-heart"></i>
+                                {% endif %}
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col col-12">
+                <div class="text-center">
+                    <p>{{ post.comments.all.count }}  <i class="bi bi-chat-left-text"></i></p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </article>

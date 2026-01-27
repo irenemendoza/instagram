@@ -1,6 +1,6 @@
 from django import forms
 
-from posts.models import Post
+from posts.models import Comment, Post
 
 
 class PostCreateForm(forms.ModelForm):
@@ -10,5 +10,8 @@ class PostCreateForm(forms.ModelForm):
         fields = ["image", "caption"]
 
 
-class LikeForm(forms.Form):
-    post_pk = forms.IntegerField(widget=forms.HiddenInput())
+class CommentCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ["text"]

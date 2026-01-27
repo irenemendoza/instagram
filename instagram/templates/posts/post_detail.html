@@ -1,4 +1,5 @@
 {% extends 'general/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_title %}
     <div class="container">
@@ -31,15 +32,54 @@
                     </a>
                 </div>
                 <div class="text-center">
-                    <p><a class="like-button" href="{% url 'post_like_ajax' post.pk %}">
-                        <span id="nLikes">{{ post.likes.all.count }}</span>
-                        {% if request.user in post.likes.all %}
-                            <i class="bi bi-suit-heart-fill"></i>
-                        {% else %}
-                            <i class="bi bi-suit-heart"></i>
-                        {% endif %}
-                    </a></p>
+                    {% if request.user.is_authenticated %}
+                        <p>
+                            <a class="like-button" href="{% url 'post_like_ajax' post.pk %}">
+                                <span id="nLikes">{{ post.likes.all.count }}</span>
+                                {% if request.user in post.likes.all %}
+                                    <i class="bi bi-suit-heart-fill"></i>
+                                {% else %}
+                                    <i class="bi bi-suit-heart"></i>
+                                {% endif %}
+                            </a>
+                        </p>
+                    {% endif %}
                 </div>
+                <section class="comments">
+                    <h5>Comentarios</h5>
+                    {% if post.comments.all.count %}
+                        {% for comment in post.comments.all %}
+                            <article>
+                                <header>
+                                    <p>
+                                        <strong>Autor</strong>: {{ comment.user }} <strong>Creado el</strong>: {{ comment.created_at }}
+                                    </p>
+                                </header>
+                                <div>
+                                    <p>{{ comment.text }}</p>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <p>Todavía no hay comentarios para esta publicación</p>
+                    {% endif %}
+                    <div>
+                        <details>
+                            <summary>Nuevo comentario</summary>
+                            <form method="post">
+                        <div class="row">
+                            <div class="col col-12">
+                                 {% csrf_token %}
+                                {{ form.text|as_crispy_field }}
+                            </div>
+                            <div class="col col-12">
+                                <button class="btn btn-sm btn-primary" type="submit">Publicar comentario</button>
+                            </div>
+                        </div>
+                    </form>
+                        </details>
+                    </div>
+                </section>
                 <div class="p-2 px-3">
                     <span>{{ post.caption }}</span>
                 </div>
