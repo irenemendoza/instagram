@@ -54,14 +54,9 @@ class ProfileDetailView(DetailView, FormView):
     context_object_name = "profile"
     form_class = ProfileFollow
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
-
     def get_initial(self):
-        initial = super().get_initial()
-        initial["profile_pk"] = self.get_object().pk
-        return initial
+        self.initial["profile_pk"] = self.get_object().pk
+        return super().get_initial()
 
     def form_valid(self, form):
         profile_pk = form.cleaned_data.get("profile_pk")
